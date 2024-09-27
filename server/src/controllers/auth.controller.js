@@ -24,6 +24,11 @@ export const signInCtrl = async (req, res) => {
 export const signUpCtrl = async (req, res) => {
   try {
     // ! Completar la función signUpCtrl
+    const { username, email, password } = req.body;
+    const user = await createUser({ username, email, password });
+
+    res.status(200).json({ message: "Sign up success", user });
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -32,7 +37,15 @@ export const signUpCtrl = async (req, res) => {
 export const signOutCtrl = (_req, res) => {
   try {
     // ! Completar la función signOutCtrl
-    res.status(200).json({ message: "Sign out success" });
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ message: "Error al cerrar sesión" });
+      }
+
+      res.clearCookie("token");
+      res.status(200).json({ message: "Sign out success" });
+    });
+    
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
