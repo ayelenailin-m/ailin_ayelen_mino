@@ -36,6 +36,7 @@ $form.addEventListener("submit", async (e) => {
     console.log(response);
     
     if (response.ok) {
+      
       // ! REDIRIGIR AL USUARIO A LA PÁGINA PRINCIPAL
       window.location.href = "/";
     } else {
